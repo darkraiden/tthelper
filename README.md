@@ -1,5 +1,7 @@
 # tthelper
 
+[![Go](https://github.com/darkraiden/tthelper/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/darkraiden/tthelper/actions/workflows/go.yml)
+
 A helper library for Gruntwork's Terratest, specifically for Terraform unit-tests on Azure.
 
 ## Installation
