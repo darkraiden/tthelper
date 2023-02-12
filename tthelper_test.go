@@ -68,7 +68,7 @@ func TestTerraformConfig(t *testing.T) {
 			setTestEnvVars()
 			tt := New(t)
 
-			terraformOptions := tt.TerraformOptions(test.fixtureFolder.actual, test.varFiles.actual...)
+			terraformOptions := tt.TerraformOptions(test.fixtureFolder.actual, nil, test.varFiles.actual...)
 
 			assert.Equal(t, test.fixtureFolder.expected, terraformOptions.TerraformDir, fmt.Sprintf("fixture folder values don't match. Expected %s, got %s", test.fixtureFolder.expected, terraformOptions.TerraformDir))
 			assert.Equal(t, test.varFiles.expectedCount, len(terraformOptions.VarFiles), fmt.Sprintf("unexpected number of VarFiles. Expected %d, got %d", test.varFiles.expectedCount, len(terraformOptions.VarFiles)))
