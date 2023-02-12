@@ -32,21 +32,23 @@ func New(t *testing.T) *Terratest {
 	}
 }
 
-// TerraformOptions returns Terraform options with the fields for TerraformDir, VarFiles, and Vars set.
-// TerraformDir is set to the given fixtureFolder, VarFiles is set to the given varFiles and Vars is set
-// to a map containing the subscription_id and tenant_id fields from the Terratest instance.
-func (tt *Terratest) TerraformOptions(fixtureFolder string, varFiles ...string) *terraform.Options {
+// TerraformOptions returns a pointer to a Terraform Options struct configured with the specified fixture folder, variables, and variable files.
+// If the input `fixtureFolder` is an empty string, it defaults to "./fixture". If the input `vars` map is nil, it initializes an empty map.
+// The values for the keys "subscription_id" and "tenant_id" are added to the `vars` map based on the values stored in the Terratest struct.
+func (tt *Terratest) TerraformOptions(fixtureFolder string, vars map[string]interface{}, varFiles ...string) *terraform.Options {
 	if fixtureFolder == "" {
 		fixtureFolder = "./fixture"
 	}
+	if vars == nil {
+		vars = make(map[string]interface{})
+	}
+	vars["subscription_id"] = tt.SubscriptionID
+	vars["tenant_id"] = tt.TenantID
 
 	return &terraform.Options{
 		TerraformDir: fixtureFolder,
 		VarFiles:     varFiles,
-		Vars: map[string]interface{}{
-			"subscription_id": tt.SubscriptionID,
-			"tenant_id":       tt.TenantID,
-		},
+		Vars:         vars,
 	}
 }
 
